@@ -78,7 +78,6 @@ def is_wifi_active():
 
 def reset_to_host_mode():
 	if not os.path.isfile('/etc/raspiwifi/host_mode'):
-		os.system('aplay /usr/lib/raspiwifi/reset_device/button_chime.wav')
 		os.system('rm -f /etc/wpa_supplicant/wpa_supplicant.conf')
 		os.system('rm -f /home/pi/Projects/RaspiWifi/tmp/*')
 		os.system('rm /etc/cron.raspiwifi/apclient_bootstrapper')
@@ -90,4 +89,9 @@ def reset_to_host_mode():
 		os.system('cp /usr/lib/raspiwifi/reset_device/static_files/dnsmasq.conf /etc/')
 		os.system('cp /usr/lib/raspiwifi/reset_device/static_files/dhcpcd.conf /etc/')
 		os.system('touch /etc/raspiwifi/host_mode')
-	os.system('reboot')
+
+
+	os.system("systemctl start dnsmasq")
+	os.system("systemctl start dhcpcd")
+	os.system("hostapd -d /etc/hostapd/hostapd.conf")
+	#os.system('reboot')

@@ -1,3 +1,3 @@
-import reset_lib
+from . import reset_lib
 
 reset_lib.reset_to_host_mode()
